@@ -1,1 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Networking MCQs - Switching Mastery</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .question-card { margin-bottom: 20px; }
+    .feedback { margin-top: 10px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Networking MCQs - Switching Mastery</h1>
+    <div id="quiz-container"></div>
+  </div>
+
+  <script>
+    // JSON with all 50 MCQs
+    const questions = [
+      {"id":1,"question":"What is the purpose of a MAC address in a switch network?","options":{"A":"Identify a network segment","B":"Identify a device uniquely at Layer 2","C":"Identify the IP of a device","D":"Control broadcast traffic"},"answer":"B"},
+      {"id":2,"question":"Each port on a switch represents?","options":{"A":"One broadcast domain","B":"One collision domain","C":"Both broadcast and collision domain","D":"None"},"answer":"B"},
+      {"id":3,"question":"Devices in different VLANs communicate through?","options":{"A":"The switch directly","B":"A router or Layer 3 device","C":"A hub","D":"Automatically without configuration"},"answer":"B"},
+      {"id":4,"question":"A trunk port carries traffic for?","options":{"A":"A single VLAN","B":"Multiple VLANs","C":"Only unicast traffic","D":"Only broadcast traffic"},"answer":"B"},
+      {"id":5,"question":"The main purpose of STP is?","options":{"A":"Increase bandwidth","B":"Prevent loops in Layer 2 network","C":"Block all broadcast traffic","D":"Learn MAC addresses"},"answer":"B"},
+      {"id":6,"question":"Switches forward broadcast frames to?","options":{"A":"One port only","B":"All ports except the source","C":"Router only","D":"VLAN trunk only"},"answer":"B"},
+      {"id":7,"question":"What is the length of a MAC address?","options":{"A":"32 bits","B":"48 bits","C":"64 bits","D":"128 bits"},"answer":"B"},
+      {"id":8,"question":"If a switch does not know the destination MAC address, it will?","options":{"A":"Drop the frame","B":"Flood it to all ports except source","C":"Send to the router","D":"Convert to IP broadcast"},"answer":"B"},
+      {"id":9,"question":"Which device does NOT break collision domains?","options":{"A":"Switch","B":"Hub","C":"Router","D":"Layer 3 Switch"},"answer":"B"},
+      {"id":10,"question":"A VLAN is used to?","options":{"A":"Increase collision domains","B":"Separate broadcast domains logically","C":"Replace a router","D":"Assign MAC addresses"},"answer":"B"},
+      {"id":11,"question":"What does an access port do?","options":{"A":"Carries multiple VLANs","B":"Carries a single VLAN","C":"Blocks broadcasts","D":"Routes traffic"},"answer":"B"},
+      {"id":12,"question":"In STP, the root bridge is chosen based on?","options":{"A":"Lowest IP address","B":"Lowest MAC address","C":"Lowest priority","D":"Highest number of ports"},"answer":"C"},
+      {"id":13,"question":"Switches operate primarily at which OSI layer?","options":{"A":"Layer 1","B":"Layer 2","C":"Layer 3","D":"Layer 4"},"answer":"B"},
+      {"id":14,"question":"Routers are used to break?","options":{"A":"Collision domains","B":"Broadcast domains","C":"MAC tables","D":"Trunks"},"answer":"B"},
+      {"id":15,"question":"Which of the following uses 802.1Q tagging?","options":{"A":"Access port","B":"Trunk port","C":"Hub","D":"Router"},"answer":"B"},
+      {"id":16,"question":"What happens to a blocked port in STP?","options":{"A":"It forwards traffic normally","B":"It drops frames to prevent loops","C":"It becomes an access port","D":"It only forwards broadcast"},"answer":"B"},
+      {"id":17,"question":"Which traffic type is sent to all devices in a VLAN?","options":{"A":"Unicast","B":"Broadcast","C":"Multicast","D":"Anycast"},"answer":"B"},
+      {"id":18,"question":"A switch forwards frames based on?","options":{"A":"IP address","B":"MAC address","C":"Port number","D":"VLAN ID only"},"answer":"B"},
+      {"id":19,"question":"What does VLAN tagging allow?","options":{"A":"Single VLAN traffic only","B":"Multiple VLAN traffic on one link","C":"IP routing","D":"MAC address learning"},"answer":"B"},
+      {"id":20,"question":"The default VLAN on most switches is?","options":{"A":"VLAN 1","B":"VLAN 10","C":"VLAN 100","D":"No default VLAN"},"answer":"A"},
+      {"id":21,"question":"Which statement is true about collision domains?","options":{"A":"Hubs break collision domains","B":"Switch ports are separate collision domains","C":"Routers extend collision domains","D":"VLANs increase collision domains"},"answer":"B"},
+      {"id":22,"question":"Which of these is a Layer 3 device?","options":{"A":"Switch","B":"Router","C":"Hub","D":"Repeater"},"answer":"B"},
+      {"id":23,"question":"Which protocol helps prevent loops in Layer 2?","options":{"A":"RIP","B":"STP","C":"OSPF","D":"DHCP"},"answer":"B"},
+      {"id":24,"question":"Which traffic type is one-to-many?","options":{"A":"Unicast","B":"Broadcast","C":"Multicast","D":"Anycast"},"answer":"C"},
+      {"id":25,"question":"Which port type is used to connect end devices?","options":{"A":"Trunk port","B":"Access port","C":"Loopback port","D":"Bridge port"},"answer":"B"},
+      {"id":26,"question":"Which of the following can be used to separate broadcast domains?","options":{"A":"Hub","B":"Router","C":"Repeater","D":"Switch"},"answer":"B"},
+      {"id":27,"question":"A switch builds its MAC address table using?","options":{"A":"IP addresses","B":"Source MAC of incoming frames","C":"Destination MAC of outgoing frames","D":"VLAN IDs only"},"answer":"B"},
+      {"id":28,"question":"Which VLAN type is used to carry management traffic?","options":{"A":"VLAN 1","B":"Native VLAN","C":"Trunk VLAN","D":"Access VLAN"},"answer":"B"},
+      {"id":29,"question":"Which of these statements is correct about hubs?","options":{"A":"Hubs create separate collision domains","B":"Hubs forward traffic to all ports","C":"Hubs forward traffic based on MAC address","D":"Hubs break broadcast domains"},"answer":"B"},
+      {"id":30,"question":"STP selects the root bridge based on?","options":{"A":"Lowest MAC address only","B":"Highest MAC address","C":"Lowest priority, then lowest MAC","D":"Number of ports"},"answer":"C"},
+      {"id":31,"question":"Which type of port allows VLAN traffic to pass between switches?","options":{"A":"Access port","B":"Trunk port","C":"Edge port","D":"Loopback port"},"answer":"B"},
+      {"id":32,"question":"Which of the following is true about VLANs?","options":{"A":"VLANs increase broadcast traffic","B":"VLANs logically separate networks","C":"VLANs remove the need for routers","D":"VLANs only exist in Layer 3 devices"},"answer":"B"},
+      {"id":33,"question":"Which traffic type is sent from one device to one device?","options":{"A":"Unicast","B":"Broadcast","C":"Multicast","D":"Anycast"},"answer":"A"},
+      {"id":34,"question":"What is the main difference between a switch and a hub?","options":{"A":"Switches forward frames to specific ports using MAC addresses","B":"Switches broadcast all traffic","C":"Hubs learn MAC addresses","D":"Switches operate at Layer 3 only"},"answer":"A"},
+      {"id":35,"question":"Which device prevents broadcast traffic from propagating?","options":{"A":"Switch","B":"Hub","C":"Router","D":"Repeater"},"answer":"C"},
+      {"id":36,"question":"Which VLAN ID is reserved for the native VLAN by default?","options":{"A":"VLAN 0","B":"VLAN 1","C":"VLAN 100","D":"VLAN 10"},"answer":"B"},
+      {"id":37,"question":"Which type of VLAN carries untagged traffic on a trunk link?","options":{"A":"Access VLAN","B":"Native VLAN","C":"Management VLAN","D":"Voice VLAN"},"answer":"B"},
+      {"id":38,"question":"What does a switch do when a frame's destination MAC is in the MAC table?","options":{"A":"Floods the frame","B":"Forwards only to the correct port","C":"Sends it to the router","D":"Drops the frame"},"answer":"B"},
+      {"id":39,"question":"Which protocol operates to prevent Layer 2 loops?","options":{"A":"STP","B":"RIP","C":"OSPF","D":"DHCP"},"answer":"A"},
+      {"id":40,"question":"Which switch port type is used to connect end devices like PCs?","options":{"A":"Trunk port","B":"Access port","C":"Edge port","D":"Uplink port"},"answer":"B"},
+      {"id":41,"question":"In a Layer 2 network, broadcast traffic is sent to?","options":{"A":"One port only","B":"All ports in the VLAN except source","C":"Router only","D":"Hub only"},"answer":"B"},
+      {"id":42,"question":"Which device extends the same collision domain to all connected devices?","options":{"A":"Switch","B":"Hub","C":"Router","D":"Bridge"},"answer":"B"},
+      {"id":43,"question":"Which switch port is configured to carry multiple VLANs?","options":{"A":"Access port","B":"Trunk port","C":"Edge port","D":"Loopback port"},"answer":"B"},
+      {"id":44,"question":"Which layer does a switch primarily operate on?","options":{"A":"Layer 1","B":"Layer 2","C":"Layer 3","D":"Layer 4"},"answer":"B"},
+      {"id":45,"question":"Which traffic type is one-to-many but only to interested devices?","options":{"A":"Unicast","B":"Broadcast","C":"Multicast","D":"Anycast"},"answer":"C"},
+      {"id":46,"question":"Routers are required for which type of communication?","options":{"A":"Same VLAN","B":"Different VLANs","C":"Same collision domain","D":"Hub connection"},"answer":"B"},
+      {"id":47,"question":"Which of the following increases the number of collision domains?","options":{"A":"Hub","B":"Switch","C":"Repeater","D":"Bridge"},"answer":"B"},
+      {"id":48,"question":"Which protocol uses BPDU frames for loop prevention?","options":{"A":"STP","B":"RIP","C":"OSPF","D":"EIGRP"},"answer":"A"},
+      {"id":49,"question":"Which type of VLAN is used for voice traffic on a switch port?","options":{"A":"Data VLAN","B":"Voice VLAN","C":"Native VLAN","D":"Management VLAN"},"answer":"B"},
+      {"id":50,"question":"Which port is typically used to connect two switches together?","options":{"A":"Access port","B":"Trunk port","C":"Edge port","D":"Loopback port"},"answer":"B"}
+    ];
+
+    const container = document.getElementById('quiz-container');
+
+    // Generate quiz HTML
+    questions.forEach(q => {
+      const card = document.createElement('div');
+      card.classList.add('card', 'question-card');
+      card.innerHTML = `
+        <div class="card-body">
+          <h5 class="card-title">Q${q.id}: ${q.question}</h5>
+          ${Object.entries(q.options).map(([key, value]) => `
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="q${q.id}" id="q${q.id}${key}" value="${key}">
+              <label class="form-check-label" for="q${q.id}${key}">${key}) ${value}</label>
+            </div>`).join('')}
+          <button class="btn btn-primary mt-2" onclick="checkAnswer(${q.id}, '${q.answer}')">Check Answer</button>
+          <div id="feedback${q.id}" class="feedback"></div>
+        </div>`;
+      container.appendChild(card);
+    });
+
+    function checkAnswer(id, correctAnswer) {
+      const radios = document.getElementsByName(`q${id}`);
+      let selected = '';
+      for (const r of radios) {
+        if (r.checked) selected = r.value;
+      }
+      const feedback = document.getElementById(`feedback${id}`);
+      if (!selected) {
+        feedback.innerHTML = "Please select an answer!";
+        feedback.style.color = "orange";
+        return;
+      }
+      if (selected === correctAnswer) {
+        feedback.innerHTML = "Correct ✅";
+        feedback.style.color = "green";
+      } else {
+        feedback.innerHTML = `Incorrect ❌. Correct answer: ${correctAnswer}`;
+        feedback.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
 
